@@ -24,6 +24,7 @@ import sys
 import argparse
 import pandas as pd
 from joblib import load
+import numpy as np
 
 parser = argparse.ArgumentParser(description="Process and score data.")
 subparsers = parser.add_subparsers(dest="command")
@@ -43,25 +44,12 @@ args = parser.parse_args()
 
 def predict_outcomes(df):
     """Process the input data and write the predictions."""
-    # Dictionary used
-    dict_kids = {'None': 0, 'One child': 1, 'Two children': 2, 'Three children': 3, 'Four children': 4, 'Five children': 5, 'Six children': 6}
-    
-    # Keep 
-    keepcols =  ['oplmet2019', 'gebjaar', 'geslacht', 'aantalki2019']
     results = df[["nomem_encr"]]
-    
-    df = df.loc[:, keepcols]
-    df["aantalki2019"] = df["aantalki2019"].map(dict_kids)
-                            
-    # Load your trained model from the models directory
-    model_path = os.path.join(os.path.dirname(__file__), "..", "models", "model.joblib")
-    model = load(model_path)
-
     # Use your trained model for prediction
-    results.loc[:, "prediction"] = model.predict(df)
-
-    #If you use predict_proba to get a probability and a different threshold
-    #df["prediction"] = (df["prediction"] >= 0.5).astype(int)
+    
+    results.loc[:, "prediction"] = np.ones(len(df))
+    #np.random.binomial(1, 0.1651, len(df))
+    #np.zeros(len(df))
     return results
 
 
