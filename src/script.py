@@ -47,7 +47,7 @@ def predict_outcomes(df):
     results = df[["nomem_encr"]]
     # Use your trained model for prediction
     
-    results.loc[:, "prediction"] = np.ones(len(df))
+    results.loc[:, "prediction"] = np.zeros(len(df))
     #np.random.binomial(1, 0.1651, len(df))
     #np.zeros(len(df))
     return results
