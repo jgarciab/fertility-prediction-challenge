@@ -47,7 +47,7 @@ def predict_outcomes(df):
     results = df[["nomem_encr"]]
                                 
     # Use your trained model for prediction
-    results.loc[:, "prediction"] = np.zeros(len(df))
+    results.loc[:, "prediction"] = np.ones(len(df))
     
     #If you use predict_proba to get a probability and a different threshold
     #df["prediction"] = (df["prediction"] >= 0.5).astype(int)
