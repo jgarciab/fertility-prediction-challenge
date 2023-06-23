@@ -44,16 +44,18 @@ args = parser.parse_args()
 
 def predict_outcomes(df):
     """Process the input data and write the predictions."""
+    # Dictionary used
     results = df[["nomem_encr"]]
-                                
+                            
+    # Load your trained model from the models directory
+    model_path = os.path.join(os.path.dirname(__file__), "..", "models", "model_1.joblib")
+    model = load(model_path)
+
     # Use your trained model for prediction
-    results.loc[:, "prediction"] = np.random.binomial(1, 0.165188, len(df))
-    
-    #If you use predict_proba to get a probability and a different threshold
-    #df["prediction"] = (df["prediction"] >= 0.5).astype(int)
+    results.loc[:, "prediction"] = model.predict(df)
+
+
     return results
-
-
 def predict(input_path, output):
     if output is None:
         output = sys.stdout
